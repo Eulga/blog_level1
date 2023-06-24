@@ -1,6 +1,14 @@
 spring:
+  sql:
+    init:
+      mode: never
+
+  h2:
+    console:
+      enabled: true
+
   datasource:
-    url: jdbc:h2:tcp://localhost/~/memo;
+    url: jdbc:h2:tcp://localhost/~/post;
     username: sparta
     password: 1234
     driver-class-name: org.h2.Driver
@@ -10,5 +18,6 @@ spring:
       ddl-auto: create
     properties:
       hibernate:
-        #      show_sql: true  => sysout으로 출력하기때문에 사용하지 않음
+        show_sql: true
         format_sql: true
+        use_sql_comments: true

@@ -1,9 +1,22 @@
 package sparta.sparta_spring_level_1.dto;
 
+import lombok.AllArgsConstructor;
 import lombok.Getter;
-import lombok.Setter;
+import sparta.sparta_spring_level_1.entity.Post;
 
-@Getter @Setter
+@Getter
+@AllArgsConstructor
 public class PostResponse {
-    String author;
+    private Long id;
+    private String title;
+    private String content;
+    private String author;
+    private String password;
+
+    public PostResponse(Post post) {
+        this.id = post.getId();
+        this.title = post.getTitle();
+        this.content = post.getContent();
+        this.author = post.getAuthor();
+    }
 }
