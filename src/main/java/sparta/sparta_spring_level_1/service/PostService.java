@@ -2,8 +2,6 @@ package sparta.sparta_spring_level_1.service;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
-import org.springframework.web.bind.annotation.RequestBody;
 import sparta.sparta_spring_level_1.dto.PostRequest;
 import sparta.sparta_spring_level_1.dto.PostResponse;
 import sparta.sparta_spring_level_1.entity.Post;
@@ -14,26 +12,28 @@ import java.util.stream.Collectors;
 
 
 @Service
-@Transactional(readOnly = true)
 @RequiredArgsConstructor
 public class PostService {
 
     private final PostRepository postRepository;
 
     // 생성
-    public PostResponse createPost(@RequestBody PostRequest postRequest) {
+    public PostResponse createPost(PostRequest postRequest) {
         Post savePost = postRequest.toEntity();
+        //비밀번호 암호화
+
         Post post = postRepository.save(savePost);
+
         return new PostResponse(post);
     }
 
     // 전체 조회
     public List<PostResponse> getPosts() {
-        return postRepository.findAllByOrderByModifiedAtDesc().stream().map(PostResponse::new).collect(Collectors.toList());
+        return postRepository.findAllByOrderByCreatedAtDesc().stream().map(PostResponse::new).collect(Collectors.toList());
     }
 
     // 게시글 id로 조회
-    public PostResponse getPostsById(Long id) {
+    public PostResponse getPostById(Long id) {
         Post post = findPost(id);
 
         return new PostResponse(post);
@@ -42,17 +42,30 @@ public class PostService {
     // 수정
     public Long updatePost(Long id, PostRequest postRequest) {
         Post post = findPost(id);
+        // 비밀번호 복호화
 
-        post.update(postRequest);
+        if(post.getPassword().equals(postRequest.getPassword())){
+            post.update(postRequest);
+        } else {
+            throw new IllegalArgumentException("Password is wrong");
+        }
 
         return post.getId();
     }
 
     // 삭제
-    public Long deletePost(Long id) {
+    public Long deletePost(Long id, String password) {
         Post post = findPost(id);
+        // 비밀번호 복호화
 
-        postRepository.delete(post);
+        System.out.println("post.getPassword() = " + post.getPassword());
+        System.out.println("password = " + password);
+
+        if(post.getPassword().equals(password)){
+            postRepository.delete(post);
+        } else {
+            throw new IllegalArgumentException("Password is wrong");
+        }
 
         return id;
     }

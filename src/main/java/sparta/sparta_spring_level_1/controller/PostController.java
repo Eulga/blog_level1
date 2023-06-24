@@ -43,7 +43,7 @@ public class PostController {
      */
     @GetMapping("/post/{id}")
     public PostResponse getPost(@PathVariable Long id) {
-        return postService.getPostsById(id);
+        return postService.getPostById(id);
     }
 
     /**
@@ -52,7 +52,7 @@ public class PostController {
      *     - 제목, 작성자명, 작성 내용을 수정하고 수정된 게시글을 Client 로 반환하기
      */
     @PutMapping("/post/{id}")
-    public Long updatePost(@PathVariable Long id, @RequestBody PostRequest postRequest) {
+    public Long updatePost(@PathVariable Long id,@Valid @RequestBody PostRequest postRequest) {
         return postService.updatePost(id, postRequest);
     }
 
@@ -62,7 +62,7 @@ public class PostController {
      *     - 선택한 게시글을 삭제하고 Client 로 성공했다는 표시 반환하기
      */
     @DeleteMapping("/post/{id}")
-    public Long deletePost(@PathVariable Long id) {
-        return postService.deletePost(id);
+    public Long deletePost(@PathVariable Long id,@RequestParam String password) {
+        return postService.deletePost(id, password);
     }
 }

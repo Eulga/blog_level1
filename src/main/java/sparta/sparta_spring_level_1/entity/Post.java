@@ -1,6 +1,5 @@
 package sparta.sparta_spring_level_1.entity;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -22,8 +21,6 @@ public class Post extends Timestamped{
     private String title;
     private String content;
     private String author;
-
-    @JsonIgnore
     private String password;
 
     public Post(Long id, String title, String content, String author, String password) {
