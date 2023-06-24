@@ -11,7 +11,6 @@ public class PostResponse {
     private String title;
     private String content;
     private String author;
-    private String password;
 
     public PostResponse(Post post) {
         this.id = post.getId();
