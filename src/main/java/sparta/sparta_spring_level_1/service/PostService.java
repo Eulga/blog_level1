@@ -2,6 +2,7 @@ package sparta.sparta_spring_level_1.service;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import sparta.sparta_spring_level_1.dto.PostRequest;
 import sparta.sparta_spring_level_1.dto.PostResponse;
 import sparta.sparta_spring_level_1.entity.Post;
@@ -40,6 +41,7 @@ public class PostService {
     }
 
     // 수정
+    @Transactional
     public Long updatePost(Long id, PostRequest postRequest) {
         Post post = findPost(id);
         // 비밀번호 복호화
@@ -49,7 +51,6 @@ public class PostService {
         } else {
             throw new IllegalArgumentException("Password is wrong");
         }
-
         return post.getId();
     }
 
