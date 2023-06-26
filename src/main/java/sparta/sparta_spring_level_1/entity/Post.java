@@ -1,5 +1,6 @@
 package sparta.sparta_spring_level_1.entity;
 
+import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -10,8 +11,7 @@ import javax.persistence.*;
 @Entity
 @Table(name = "posts")
 @Getter
-@NoArgsConstructor
-@Builder
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class Post extends Timestamped{
 
     @Id @GeneratedValue
@@ -23,8 +23,8 @@ public class Post extends Timestamped{
     private String author;
     private String password;
 
-    public Post(Long id, String title, String content, String author, String password) {
-        this.id = id;
+    @Builder
+    public Post(String title, String content, String author, String password) {
         this.title = title;
         this.content = content;
         this.author = author;

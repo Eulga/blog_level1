@@ -59,9 +59,6 @@ public class PostService {
         Post post = findPost(id);
         // 비밀번호 복호화
 
-        System.out.println("post.getPassword() = " + post.getPassword());
-        System.out.println("password = " + password);
-
         if(post.getPassword().equals(password)){
             postRepository.delete(post);
         } else {
