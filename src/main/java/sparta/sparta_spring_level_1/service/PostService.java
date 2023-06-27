@@ -13,6 +13,7 @@ import java.util.stream.Collectors;
 
 
 @Service
+@Transactional(readOnly = true)
 @RequiredArgsConstructor
 public class PostService {
 
@@ -34,6 +35,7 @@ public class PostService {
     }
 
     // 게시글 id로 조회
+    @Transactional
     public PostResponse getPostById(Long id) {
         Post post = findPost(id);
 
@@ -55,6 +57,7 @@ public class PostService {
     }
 
     // 삭제
+    @Transactional
     public Long deletePost(Long id, String password) {
         Post post = findPost(id);
         // 비밀번호 복호화
@@ -70,7 +73,7 @@ public class PostService {
 
     private Post findPost(Long id) {
         return postRepository.findById(id).orElseThrow(
-                () -> new IllegalArgumentException("선택한 게시글은 존재하지 않습니다.")
+                () -> new IllegalArgumentException("Not found a post")
         );
     }
 }
